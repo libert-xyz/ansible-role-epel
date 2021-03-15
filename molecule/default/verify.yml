@@ -1,0 +1,13 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  become: yes
+
+  tasks:
+  - name: Install jq from EPEL
+    package:
+      name: jq
+      state: present

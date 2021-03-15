@@ -1,0 +1,21 @@
+---
+- name: Install EPEL
+  block:
+    - name: add epel gpg key
+      rpm_key:
+        key: "{{ epel_gpg_key }}"
+        state: present
+
+    - name: Install EPEL-repo
+      package:
+        name: "{{ epel_url }}"
+        state: present
+
+    - name: Update yum cache
+      yum:
+        update_cache: yes
+  when:
+    - (ansible_distribution == "Amazon" and
+      ansible_distribution_major_version == "2") or
+      (ansible_distribution in [ "CentOS", "RedHat" ] and
+      ansible_distribution_major_version in [ "7", "8" ])
